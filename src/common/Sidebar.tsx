@@ -1,6 +1,9 @@
 import React from "react";
+import { Link, useLocation } from "react-router-dom";
+
 import useTheme from "../context/UseTheme";
 import useSidebar from "../context/UseSidebar";
+
 import PlaceholderIcon from "../icons/Placeholder";
 import CloseIcon from "../icons/Close";
 import SunIcon from "../icons/Sun";
@@ -9,6 +12,29 @@ import MoonIcon from "../icons/Moon";
 const Sidebar: React.FC = () => {
   const { sidebarOpen, setSidebarOpen } = useSidebar();
   const { isDarkMode, toggleDarkMode } = useTheme();
+  const location = useLocation();
+
+  const handleNavigationClick = () => {
+    setSidebarOpen(false);
+  };
+
+  const isActive = (path: string) => {
+    if (path === "/") {
+      return (
+        location.pathname === "/" ||
+        (!location.pathname.startsWith("/calendar") &&
+          !location.pathname.startsWith("/stats"))
+      );
+    }
+    return location.pathname.startsWith(path);
+  };
+
+  const linkClass = (path: string) =>
+    `flex items-center px-6 py-3 text-gray-600 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700 ${
+      isActive(path)
+        ? "bg-gray-200 text-gray-700 font-semibold dark:bg-gray-700 dark:text-white"
+        : ""
+    }`;
 
   return (
     <>
@@ -36,32 +62,32 @@ const Sidebar: React.FC = () => {
           </button>
         </div>
         <nav className="mt-6">
-          <a
-            href="/"
-            className="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
+          <Link
+            to="/"
+            onClick={handleNavigationClick}
+            className={linkClass("/")}
           >
             <PlaceholderIcon />
             <span className="mx-4 font-medium">Dashboard</span>
-          </a>
-          <a
-            href="/calendar"
-            className="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
+          </Link>
+          <Link
+            to="/calendar"
+            onClick={handleNavigationClick}
+            className={linkClass("/calendar")}
           >
             <PlaceholderIcon />
             <span className="mx-4 font-medium">Calendar</span>
-          </a>
-          <a
-            href="/stats"
-            className="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
+          </Link>
+          <Link
+            to="/stats"
+            onClick={handleNavigationClick}
+            className={linkClass("/stats")}
           >
             <PlaceholderIcon />
             <span className="mx-4 font-medium">Stats</span>
-          </a>
+          </Link>
         </nav>
         <div className="absolute bottom-0 w-full p-6">
-          <p className="text-sm text-center text-gray-500 dark:text-gray-400">
-            This is a sidebar
-          </p>
           <button
             onClick={toggleDarkMode}
             className="mt-4 w-full flex items-center justify-center px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-500"

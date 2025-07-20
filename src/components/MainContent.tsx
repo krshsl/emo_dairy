@@ -1,5 +1,7 @@
 import React from "react";
+
 import useSidebar from "../context/UseSidebar";
+
 import HamburgerIcon from "../icons/Hamburger";
 import AppRouter from "../router/AppRouter";
 
