@@ -42,24 +42,24 @@ const AddEntry: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full flex-col items-center justify-center rounded-lg border-4 border-dashed border-gray-300 bg-white p-8 dark:bg-gray-800 dark:border-gray-600">
-      <h1 className="text-center text-3xl font-extrabold text-gray-800 lg:text-5xl dark:text-white">
+    <div className="flex h-full flex-col items-center justify-center rounded-lg border-4 border-dashed border-primary-200 bg-background p-8 dark:bg-foreground dark:border-primary-600">
+      <h1 className="text-center text-3xl font-extrabold text-foreground lg:text-5xl dark:text-background">
         Add New Entry
       </h1>
-      <p className="mt-4 text-center text-lg text-gray-600 dark:text-gray-300">
+      <p className="mt-4 text-center text-lg text-primary-600 dark:text-primary-300">
         Add your daily note and reaction.
       </p>
 
       {message && (
         <div
-          className={`mt-4 p-3 rounded-md text-center ${message.includes("successfully") ? "bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100" : "bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100"}`}
+          className={`mt-4 p-3 rounded-md text-center ${message.includes("successfully") ? "bg-primary-100 text-primary-800 dark:bg-primary-800 dark:text-primary-100" : "bg-secondary-100 text-secondary-800 dark:bg-secondary-800 dark:text-secondary-100"}`}
         >
           {message}
         </div>
       )}
 
       <div className="mt-8 w-full max-w-md">
-        <label className="block text-lg font-medium text-gray-700 dark:text-gray-200 mb-2">
+        <label className="block text-lg font-medium text-primary-700 dark:text-primary-200 mb-2">
           How was your day?
         </label>
         <div className="flex justify-around mb-6">
@@ -68,8 +68,8 @@ const AddEntry: React.FC = () => {
               key={reaction.name}
               onClick={() => setSelectedEmoji(reaction)}
               className={`p-3 rounded-full text-4xl transition-transform transform hover:scale-110
-                ${selectedEmoji.emoji === reaction.emoji ? "ring-4 ring-blue-500 dark:ring-blue-400" : "hover:bg-gray-200 dark:hover:bg-gray-700"}
-              `}
+                  ${selectedEmoji.emoji === reaction.emoji ? "ring-4 ring-accent dark:ring-accent" : "hover:bg-primary-200 dark:hover:bg-primary-700"}
+                `}
               title={reaction.name}
             >
               {reaction.emoji}
@@ -79,13 +79,13 @@ const AddEntry: React.FC = () => {
 
         <label
           htmlFor="note"
-          className="block text-lg font-medium text-gray-700 dark:text-gray-200 mb-2"
+          className="block text-lg font-medium text-primary-700 dark:text-primary-200 mb-2"
         >
           Your Note:
         </label>
         <textarea
           id="note"
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+          className="w-full p-3 border border-primary-200 rounded-lg focus:ring-accent focus:border-accent dark:bg-primary-700 dark:border-primary-600 dark:text-background dark:placeholder-primary-400"
           rows={5}
           placeholder="Write your note here..."
           value={note}
@@ -94,7 +94,7 @@ const AddEntry: React.FC = () => {
 
         <button
           onClick={handleSaveEntry}
-          className="mt-6 w-full px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-500"
+          className="mt-6 w-full px-6 py-3 bg-secondary text-white font-semibold rounded-lg shadow-md hover:bg-secondary-700 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-75"
         >
           Save Entry
         </button>

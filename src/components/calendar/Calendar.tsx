@@ -5,12 +5,13 @@ import { iterateFrom } from "@collectable/red-black-tree";
 import type { TreeKey, TreeValue } from "../../interface/dairyEntry";
 import { getTree } from "../../lib/tree/redBlackTree";
 import { formatDateToYYYYMMDD } from "../../lib/utils/dateUtils";
+import { getMoodColors } from "../../lib/utils/moodColor";
 
 interface CalendarEntry {
   date: Date | null;
   dayOfMonth: number | null;
   hasEntry: boolean;
-  emoji: string | null;
+  entry: TreeValue | null;
   isFuture: boolean;
 }
 
@@ -37,7 +38,7 @@ const Calendar: React.FC = () => {
       date: null,
       dayOfMonth: null,
       hasEntry: false,
-      emoji: null,
+      entry: null,
       isFuture: false,
     };
 
@@ -85,7 +86,7 @@ const Calendar: React.FC = () => {
         date: date,
         dayOfMonth: i,
         hasEntry: !!entry,
-        emoji: !!entry ? entry?.emoji : null,
+        entry: !!entry ? entry : null,
         isFuture: isFuture,
       });
     }
@@ -164,15 +165,15 @@ const Calendar: React.FC = () => {
   const years = Array.from({ length: 12 }, (_, i) => currentYear - 10 + i);
 
   return (
-    <div className="flex h-full flex-col items-center justify-start rounded-lg border-4 border-dashed border-gray-300 bg-white p-8 dark:bg-gray-800 dark:border-gray-600 overflow-auto max-h-screen">
-      <h1 className="text-center text-3xl font-extrabold text-gray-800 lg:text-5xl dark:text-white mb-6">
+    <div className="flex h-full flex-col items-center justify-start rounded-lg border-4 border-dashed border-primary-200 bg-background p-8 dark:bg-foreground dark:border-primary-600 overflow-auto max-h-screen">
+      <h1 className="text-center text-3xl font-extrabold text-foreground lg:text-5xl dark:text-background mb-6">
         Calendar
       </h1>
 
       <div className="flex flex-col sm:flex-row justify-between items-center w-full mb-4 gap-2 sm:gap-4">
         <button
           onClick={goToPreviousMonth}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-full sm:w-auto"
+          className="px-4 py-2 bg-secondary text-white rounded-lg hover:bg-secondary-700 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-75"
         >
           &lt; Previous
         </button>
@@ -181,7 +182,7 @@ const Calendar: React.FC = () => {
           <select
             value={currentMonth.getMonth()}
             onChange={handleMonthChange}
-            className="p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600"
+            className="p-2 border border-primary-200 rounded-lg bg-primary-100 text-foreground dark:bg-primary-700 dark:text-background dark:border-primary-600"
           >
             {Array.from({ length: 12 }, (_, i) => (
               <option key={i} value={i}>
@@ -192,7 +193,7 @@ const Calendar: React.FC = () => {
           <select
             value={currentMonth.getFullYear()}
             onChange={handleYearChange}
-            className="p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600"
+            className="p-2 border border-primary-200 rounded-lg bg-primary-100 text-foreground dark:bg-primary-700 dark:text-background dark:border-primary-600"
           >
             {years.map((year) => (
               <option key={year} value={year}>
@@ -205,46 +206,57 @@ const Calendar: React.FC = () => {
         <button
           onClick={goToNextMonth}
           disabled={isFutureMonth}
-          className={`px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-full sm:w-auto
-                ${isFutureMonth ? "opacity-50 cursor-not-allowed" : ""}
-              `}
+          className={`px-4 py-2 bg-secondary text-white rounded-lg hover:bg-secondary-700 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-75
+                  ${isFutureMonth ? "opacity-50 cursor-not-allowed" : ""}
+                `}
         >
           Next &gt;
         </button>
       </div>
 
-      <div className="grid grid-cols-7 gap-1 w-full border border-gray-200 dark:border-gray-700 rounded-lg p-2">
+      <div className="grid grid-cols-7 gap-1 w-full border border-primary-200 dark:border-primary-700 rounded-lg p-2">
         {daysOfWeek.map((day) => (
           <div
             key={day}
-            className="text-center font-bold text-gray-700 dark:text-gray-300 py-2"
+            className="text-center font-bold text-foreground dark:text-background py-2"
           >
             {day}
           </div>
         ))}
-        {calendarDays.map((day, index) => (
-          <div
-            key={index}
-            className={`relative flex flex-col items-center justify-center p-3 h-28 sm:h-32 md:h-36 lg:h-40 border border-gray-200 dark:border-gray-700 rounded-lg
-                  ${day.date ? "bg-gray-50 dark:bg-gray-700" : "bg-gray-100 dark:bg-gray-800"}
-                  ${day.date && day.date.toDateString() === today.toDateString() ? "ring-2 ring-blue-500 dark:ring-blue-400" : ""}
+        {calendarDays.map((day, index) => {
+          const moodColors = day.entry?.name
+            ? getMoodColors(day.entry?.name)
+            : null;
+          const isToday =
+            day.date && day.date.toDateString() === today.toDateString();
+
+          return (
+            <div
+              key={index}
+              className={`
+                  relative flex flex-col items-center justify-center p-3 h-28 sm:h-32 md:h-36 lg:h-40 border rounded-lg transition-colors duration-200
+                  ${day.date ? (moodColors ? `${moodColors.bgColor1} border-${moodColors.borderColor1}` : "bg-background dark:bg-primary-700 border-primary-200 dark:border-primary-700") : "bg-primary-100 dark:bg-primary-800 border-primary-200 dark:border-primary-700"}
+                  ${isToday ? "ring-2 ring-accent dark:ring-accent" : ""}
                   ${day.isFuture ? "opacity-50 cursor-not-allowed" : ""}
-                  ${day.hasEntry && !day.isFuture ? "cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-800" : day.date && !day.isFuture ? "cursor-default" : ""}
+                  ${day.hasEntry && !day.isFuture ? "cursor-pointer hover:shadow-md" : day.date && !day.isFuture ? "cursor-default" : ""}
                 `}
-            onClick={() => handleDateClick(day)}
-          >
-            {day.dayOfMonth && (
-              <span className="text-lg font-medium text-gray-800 dark:text-white absolute top-2 left-2">
-                {day.dayOfMonth}
-              </span>
-            )}
-            {day.hasEntry && day.emoji && (
-              <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-xl lg:top-2 lg:right-2 lg:left-auto lg:translate-x-0">
-                {day.emoji}
-              </span>
-            )}
-          </div>
-        ))}
+              onClick={() => handleDateClick(day)}
+            >
+              {day.dayOfMonth && (
+                <span
+                  className={`text-lg font-medium ${moodColors ? moodColors.textColor2 : "text-foreground dark:text-background"} absolute top-2 left-2`}
+                >
+                  {day.dayOfMonth}
+                </span>
+              )}
+              {day.hasEntry && day.entry?.emoji && (
+                <span className="absolute bottom-2 right-2 text-xl">
+                  {day.entry?.emoji}
+                </span>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

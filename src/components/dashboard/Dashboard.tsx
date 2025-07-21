@@ -10,6 +10,7 @@ import { getTree, insertOrUpdate, treeLen } from "../../lib/tree/redBlackTree";
 import type { TreeKey, TreeValue } from "../../interface/dairyEntry";
 import { reactions } from "../../interface/dairyEntry";
 import { formatDateToYYYYMMDD } from "../../lib/utils/dateUtils";
+import { getMoodColors } from "../../lib/utils/moodColor";
 
 const PAGE_SIZE = 10;
 const TRUNCATE_LENGTH = 100;
@@ -103,53 +104,64 @@ const Dashboard: React.FC = () => {
   return (
     <div
       ref={scrollContainerRef}
-      className="flex h-full flex-col items-center justify-start rounded-lg border-4 border-dashed border-gray-300 bg-white p-8 dark:bg-gray-800 dark:border-gray-600 overflow-auto max-h-screen"
+      className="flex h-full flex-col items-center justify-start rounded-lg border-4 border-dashed border-primary-200 bg-background p-8 dark:bg-foreground dark:border-primary-600 overflow-auto max-h-screen"
     >
-      <h1 className="text-center text-3xl font-extrabold text-gray-800 lg:text-5xl dark:text-white">
+      <h1 className="text-center text-3xl font-extrabold text-foreground lg:text-5xl dark:text-background">
         Daily Entries
       </h1>
-      <p className="mt-4 text-center text-lg text-gray-600 dark:text-gray-300">
+      <p className="mt-4 text-center text-lg text-primary-600 dark:text-primary-300">
         Welcome to your emoji dairy! Scroll down to load more entries.
       </p>
 
       <button
         onClick={() => navigate("/add")}
-        className="mt-6 mb-8 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-500"
+        className="mt-6 mb-8 px-6 py-3 bg-secondary text-white font-semibold rounded-lg shadow-md hover:bg-secondary-700 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-75"
       >
         Add New Entry
       </button>
 
       <ul className="mt-8 w-full">
-        {entries.map(([date, { emoji, name, note }]) => (
-          <li
-            key={formatDateToYYYYMMDD(date)}
-            className="mb-2 rounded border border-gray-300 p-4 dark:border-gray-600 dark:bg-gray-700 flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
-            onClick={() => navigate(`/entry/${formatDateToYYYYMMDD(date)}`)}
-          >
-            <div className="flex justify-between items-center w-full mb-2">
-              <div className="flex items-center text-xl lg:text-2xl text-gray-800 dark:text-white">
-                {emoji}
-                <span className="ml-2 font-semibold">{name}</span>
+        {entries.map(([date, { emoji, name, note }]) => {
+          const moodColors = getMoodColors(name);
+          return (
+            <li
+              key={formatDateToYYYYMMDD(date)}
+              className={`mb-2 rounded-lg border ${moodColors.borderColor2} p-4 ${moodColors.bgColor3} flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200 relative`}
+              onClick={() => navigate(`/entry/${formatDateToYYYYMMDD(date)}`)}
+            >
+              <div className="flex justify-between items-center w-full mb-2">
+                <div
+                  className={`flex items-center text-xl lg:text-2xl ${moodColors.textColor2}`}
+                >
+                  <span className="font-semibold">{name}</span>
+                </div>
+                <span
+                  className={`font-mono text-base ${moodColors.textColor3}`}
+                >
+                  {date.toLocaleDateString()}
+                </span>
               </div>
-              <span className="font-mono text-sm text-gray-500 dark:text-gray-400">
-                {date.toLocaleDateString()}
+              <div
+                className={`mt-1 text-base lg:text-lg ${moodColors.textColor2} w-full text-center`}
+              >
+                {note.length > TRUNCATE_LENGTH
+                  ? `${note.substring(0, TRUNCATE_LENGTH)}...`
+                  : note}
+              </div>
+              <span className="absolute bottom-2 right-2 text-3xl">
+                {emoji}
               </span>
-            </div>
-            <div className="mt-1 text-base lg:text-lg text-gray-800 dark:text-white w-full text-center">
-              {note.length > TRUNCATE_LENGTH
-                ? `${note.substring(0, TRUNCATE_LENGTH)}...`
-                : note}
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
       {!hasMore && (
-        <p className="mt-4 text-center text-gray-500 dark:text-gray-400">
+        <p className="mt-4 text-center text-primary-500 dark:text-primary-400">
           No more entries to load.
         </p>
       )}
       {hasMore && (
-        <p className="mt-4 text-center text-gray-500 dark:text-gray-400">
+        <p className="mt-4 text-center text-primary-500 dark:text-primary-400">
           Loading more...
         </p>
       )}

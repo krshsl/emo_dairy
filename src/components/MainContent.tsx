@@ -9,14 +9,14 @@ const MainContent: React.FC = () => {
   const { setSidebarOpen } = useSidebar();
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden dark:bg-gray-800">
-      <header className="flex items-center justify-between border-b border-gray-200 bg-white p-4 lg:hidden dark:bg-gray-900 dark:border-gray-700">
-        <span className="text-lg font-semibold text-gray-800 dark:text-white">
-          My App
+    <div className="flex flex-1 flex-col overflow-hidden dark:bg-foreground">
+      <header className="flex items-center justify-between border-b border-primary-200 bg-background p-4 lg:hidden dark:bg-foreground dark:border-primary-700">
+        <span className="text-lg font-semibold text-foreground dark:text-background">
+          Emo-Dairy
         </span>
         <button
           onClick={() => setSidebarOpen(true)}
-          className="text-gray-500 focus:text-gray-600 focus:outline-none dark:text-gray-400 dark:focus:text-gray-300"
+          className="text-primary-500 focus:text-primary-600 focus:outline-none dark:text-primary-400 dark:focus:text-primary-300"
         >
           <HamburgerIcon />
         </button>

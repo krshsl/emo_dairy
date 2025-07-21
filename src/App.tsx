@@ -6,7 +6,7 @@ import Sidebar from "./common/Sidebar";
 import MainContent from "./components/MainContent";
 import "./App.css";
 
-function App() {
+const App: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     const userPref = localStorage.getItem("theme");
@@ -27,15 +27,14 @@ function App() {
   }, [isDarkMode]);
 
   const toggleDarkMode = () => {
-    console.log("isDarkMode: ", isDarkMode);
-    setIsDarkMode((isDarkMode) => !isDarkMode);
+    setIsDarkMode((prevMode) => !prevMode);
   };
 
   return (
     <BrowserRouter>
       <SidebarContext.Provider value={{ sidebarOpen, setSidebarOpen }}>
         <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
-          <div className="relative flex h-screen overflow-hidden bg-gray-100 font-sans dark:bg-gray-800">
+          <div className="relative flex h-screen overflow-hidden bg-background font-sans dark:bg-foreground">
             <Sidebar />
             <MainContent />
           </div>
@@ -43,6 +42,6 @@ function App() {
       </SidebarContext.Provider>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

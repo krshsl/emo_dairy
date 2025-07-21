@@ -30,9 +30,9 @@ const Sidebar: React.FC = () => {
   };
 
   const linkClass = (path: string) =>
-    `flex items-center px-6 py-3 text-gray-600 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700 ${
+    `flex items-center px-6 py-3 text-primary-600 hover:bg-primary-200 dark:text-primary-300 dark:hover:bg-primary-700 ${
       isActive(path)
-        ? "bg-gray-200 text-gray-700 font-semibold dark:bg-gray-700 dark:text-white"
+        ? "bg-primary-200 text-primary-700 font-semibold dark:bg-primary-700 dark:text-background"
         : ""
     }`;
 
@@ -47,15 +47,15 @@ const Sidebar: React.FC = () => {
 
       <aside
         className={`
-                      fixed inset-y-0 left-0 z-30 w-64 flex-shrink-0 transform bg-white shadow-md transition-transform duration-300 ease-in-out
-                      ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} /* Mobile toggle */
-                      lg:static lg:inset-auto lg:translate-x-0 lg:block /* Desktop overrides: always visible, static position, display block */
-                      dark:bg-gray-900 dark:shadow-lg
-                    `}
+                          fixed inset-y-0 left-0 z-30 w-64 flex-shrink-0 transform bg-primary-100 shadow-md transition-transform duration-300 ease-in-out
+                          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+                          lg:static lg:inset-auto lg:translate-x-0 lg:block
+                          dark:bg-primary-800 dark:shadow-lg
+                        `}
       >
         <div className="flex items-center justify-between p-6">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-            My App
+          <h1 className="text-2xl font-bold text-foreground dark:text-background">
+            Emo-Diary
           </h1>
           <button onClick={() => setSidebarOpen(false)} className="lg:hidden">
             <CloseIcon />
@@ -90,7 +90,7 @@ const Sidebar: React.FC = () => {
         <div className="absolute bottom-0 w-full p-6">
           <button
             onClick={toggleDarkMode}
-            className="mt-4 w-full flex items-center justify-center px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-500"
+            className="mt-4 w-full flex items-center justify-center px-4 py-2 rounded-md bg-primary-200 text-primary-700 hover:bg-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-400 dark:bg-primary-700 dark:text-background dark:hover:bg-primary-600 dark:focus:ring-primary-500"
           >
             {isDarkMode ? <SunIcon /> : <MoonIcon />}
             <span className="ml-2">
