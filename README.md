@@ -80,7 +80,7 @@ This will create a `build` folder with the production-ready application.
 
 ## Future Enhancements
 
-- Statistics and mood trends analysis
+- "More" Statistics and mood trends analysis
 - Export/import functionality for diary data (or you can also manually update the local storage to perform this)
 - Custom emoji support
 
