@@ -28,12 +28,14 @@ const Dashboard: React.FC = () => {
   const generateDummyData = useCallback(() => {
     if (treeLen() === 0) {
       const now = new Date();
+      const sixMonthsAgo = new Date();
+      sixMonthsAgo.setMonth(now.getMonth() - 6);
+
       for (let i = 0; i < 100; i++) {
-        const date = new Date(
-          now.getFullYear(),
-          now.getMonth(),
-          now.getDate() - i,
-        );
+        const randomTime =
+          sixMonthsAgo.getTime() +
+          Math.random() * (now.getTime() - sixMonthsAgo.getTime());
+        const date = new Date(randomTime);
 
         const random = Math.floor(Math.random() * reactions.length);
         insertOrUpdate(date, {
@@ -104,7 +106,13 @@ const Dashboard: React.FC = () => {
   return (
     <div
       ref={scrollContainerRef}
-      className="flex h-full flex-col items-center justify-start rounded-lg border-4 border-dashed border-primary-200 bg-background p-8 dark:bg-foreground dark:border-primary-600 overflow-auto max-h-screen"
+      className="
+      flex flex-col items-center justify-start overflow-auto p-8
+      h-full w-full rounded-none bg-background dark:bg-foreground
+
+      md:h-full md:w-full md:rounded-lg
+      md:border-4 md:border-dashed md:border-primary-200 md:dark:border-primary-600
+    "
     >
       <h1 className="text-center text-3xl font-extrabold text-foreground lg:text-5xl dark:text-background">
         Daily Entries

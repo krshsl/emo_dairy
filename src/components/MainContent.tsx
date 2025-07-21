@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import useSidebar from "../context/UseSidebar";
 
@@ -7,12 +8,13 @@ import AppRouter from "../router/AppRouter";
 
 const MainContent: React.FC = () => {
   const { setSidebarOpen } = useSidebar();
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden dark:bg-foreground">
       <header className="flex items-center justify-between border-b border-primary-200 bg-background p-4 lg:hidden dark:bg-foreground dark:border-primary-700">
         <span className="text-lg font-semibold text-foreground dark:text-background">
-          Emo-Dairy
+          <button onClick={() => navigate("/")}>Emo-Dairy</button>
         </span>
         <button
           onClick={() => setSidebarOpen(true)}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import useTheme from "../context/UseTheme";
 import useSidebar from "../context/UseSidebar";
@@ -21,9 +21,7 @@ const Sidebar: React.FC = () => {
   const isActive = (path: string) => {
     if (path === "/") {
       return (
-        location.pathname === "/" ||
-        (!location.pathname.startsWith("/calendar") &&
-          !location.pathname.startsWith("/stats"))
+        location.pathname === "/" || !location.pathname.startsWith("/status")
       );
     }
     return location.pathname.startsWith(path);
@@ -55,7 +53,7 @@ const Sidebar: React.FC = () => {
       >
         <div className="flex items-center justify-between p-6">
           <h1 className="text-2xl font-bold text-foreground dark:text-background">
-            Emo-Diary
+            Emo-Dairy
           </h1>
           <button onClick={() => setSidebarOpen(false)} className="lg:hidden">
             <CloseIcon />
@@ -71,20 +69,12 @@ const Sidebar: React.FC = () => {
             <span className="mx-4 font-medium">Dashboard</span>
           </Link>
           <Link
-            to="/calendar"
+            to="/status"
             onClick={handleNavigationClick}
-            className={linkClass("/calendar")}
+            className={linkClass("/status")}
           >
             <PlaceholderIcon />
-            <span className="mx-4 font-medium">Calendar</span>
-          </Link>
-          <Link
-            to="/stats"
-            onClick={handleNavigationClick}
-            className={linkClass("/stats")}
-          >
-            <PlaceholderIcon />
-            <span className="mx-4 font-medium">Stats</span>
+            <span className="mx-4 font-medium">Status</span>
           </Link>
         </nav>
         <div className="absolute bottom-0 w-full p-6">

@@ -42,7 +42,15 @@ const AddEntry: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full flex-col items-center justify-center rounded-lg border-4 border-dashed border-primary-200 bg-background p-8 dark:bg-foreground dark:border-primary-600">
+    <div
+      className="
+      flex flex-col items-center justify-start overflow-auto p-8
+      h-full w-full rounded-none bg-background dark:bg-foreground
+
+      md:h-full md:w-full md:rounded-lg
+      md:border-4 md:border-dashed md:border-primary-200 md:dark:border-primary-600
+    "
+    >
       <h1 className="text-center text-3xl font-extrabold text-foreground lg:text-5xl dark:text-background">
         Add New Entry
       </h1>

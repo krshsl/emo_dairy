@@ -40,8 +40,8 @@ const EntryDetail: React.FC = () => {
       }
     }
 
-    if (location.state?.from === "/calendar") {
-      setBack(["Calendar", "/calendar"]);
+    if (location.state?.from === "/status") {
+      setBack(["Status", "/status"]);
     }
   }, [dateString, location]);
 
@@ -70,7 +70,15 @@ const EntryDetail: React.FC = () => {
   console.log(moodColors);
 
   return (
-    <div className="flex h-full flex-col items-center justify-start rounded-lg border-4 border-dashed border-primary-200 bg-background p-8 dark:bg-foreground dark:border-primary-600 overflow-auto">
+    <div
+      className="
+      flex flex-col items-center justify-start overflow-auto p-8
+      h-full w-full rounded-none bg-background dark:bg-foreground
+
+      md:h-full md:w-full md:rounded-lg
+      md:border-4 md:border-dashed md:border-primary-200 md:dark:border-primary-600
+    "
+    >
       <h1 className="text-center text-3xl font-extrabold text-foreground lg:text-5xl dark:text-background mb-6">
         Diary Entry
       </h1>

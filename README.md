@@ -27,10 +27,9 @@ The application is built using modern web technologies:
 src/
 ├── common/          # Common UI components
 ├── components/      # Main components
-│   ├── calendar/    # Calendar view
+│   ├── status/     # Monthly Status view
 │   ├── dashboard/   # Dashboard view
 │   ├── entry/       # Entry creation and viewing
-│   └── stats/       # Statistics view
 ├── context/         # React context providers
 ├── icons/           # SVG icons as React components
 ├── interface/       # TypeScript interfaces

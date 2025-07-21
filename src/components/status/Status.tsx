@@ -5,7 +5,9 @@ import { iterateFrom } from "@collectable/red-black-tree";
 import type { TreeKey, TreeValue } from "../../interface/dairyEntry";
 import { getTree } from "../../lib/tree/redBlackTree";
 import { formatDateToYYYYMMDD } from "../../lib/utils/dateUtils";
-import { getMoodColors } from "../../lib/utils/moodColor";
+import CalendarComponent from "./Calendar";
+import MoodBarPlotComponent from "./MoodBar";
+import MoodLinePlotComponent from "./MoodLine";
 
 interface CalendarEntry {
   date: Date | null;
@@ -15,12 +17,15 @@ interface CalendarEntry {
   isFuture: boolean;
 }
 
-const Calendar: React.FC = () => {
+const Status: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [calendarDays, setCalendarDays] = useState<Array<CalendarEntry>>([]);
+  const [entriesForMonth, setEntriesForMonth] = useState<
+    [TreeKey, TreeValue][]
+  >([]);
 
   const generateCalendar = useCallback(() => {
     const year = currentMonth.getFullYear();
@@ -70,9 +75,11 @@ const Calendar: React.FC = () => {
     );
     let entry = iter.next();
 
+    setEntriesForMonth([]);
     while (!entry.done && entry.value && entry.value.key >= startOfMonth) {
       const { key, value } = entry.value;
       entriesMap.set(key.toLocaleDateString(), value);
+      setEntriesForMonth((prev) => [...prev, [key, value]]);
       entry = iter.next();
     }
 
@@ -165,101 +172,44 @@ const Calendar: React.FC = () => {
   const years = Array.from({ length: 12 }, (_, i) => currentYear - 10 + i);
 
   return (
-    <div className="flex h-full flex-col items-center justify-start rounded-lg border-4 border-dashed border-primary-200 bg-background p-8 dark:bg-foreground dark:border-primary-600 overflow-auto max-h-screen">
+    <div
+      className="
+      flex flex-col items-center justify-start overflow-auto
+      h-full w-full rounded-none bg-background dark:bg-foreground
+
+      md:h-full md:w-full md:rounded-lg md:p-8
+      md:border-4 md:border-dashed md:border-primary-200 md:dark:border-primary-600
+    "
+    >
       <h1 className="text-center text-3xl font-extrabold text-foreground lg:text-5xl dark:text-background mb-6">
-        Calendar
+        Monthly Status
       </h1>
 
-      <div className="flex flex-col sm:flex-row justify-between items-center w-full mb-4 gap-2 sm:gap-4">
-        <button
-          onClick={goToPreviousMonth}
-          className="px-4 py-2 bg-secondary text-white rounded-lg hover:bg-secondary-700 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-75"
-        >
-          &lt; Previous
-        </button>
+      <CalendarComponent
+        currentMonth={currentMonth}
+        calendarDays={calendarDays}
+        goToPreviousMonth={goToPreviousMonth}
+        goToNextMonth={goToNextMonth}
+        handleMonthChange={handleMonthChange}
+        handleYearChange={handleYearChange}
+        handleDateClick={handleDateClick}
+        daysOfWeek={daysOfWeek}
+        today={today}
+        isFutureMonth={isFutureMonth}
+        years={years}
+      />
 
-        <div className="flex gap-2 w-full sm:w-auto justify-center">
-          <select
-            value={currentMonth.getMonth()}
-            onChange={handleMonthChange}
-            className="p-2 border border-primary-200 rounded-lg bg-primary-100 text-foreground dark:bg-primary-700 dark:text-background dark:border-primary-600"
-          >
-            {Array.from({ length: 12 }, (_, i) => (
-              <option key={i} value={i}>
-                {new Date(0, i).toLocaleString("default", { month: "long" })}
-              </option>
-            ))}
-          </select>
-          <select
-            value={currentMonth.getFullYear()}
-            onChange={handleYearChange}
-            className="p-2 border border-primary-200 rounded-lg bg-primary-100 text-foreground dark:bg-primary-700 dark:text-background dark:border-primary-600"
-          >
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
+      <div className="flex flex-col lg:flex-row w-full gap-8 mt-8">
+        <div className="w-full lg:w-1/2">
+          <MoodBarPlotComponent entriesForMonth={entriesForMonth} />
         </div>
 
-        <button
-          onClick={goToNextMonth}
-          disabled={isFutureMonth}
-          className={`px-4 py-2 bg-secondary text-white rounded-lg hover:bg-secondary-700 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-75
-                  ${isFutureMonth ? "opacity-50 cursor-not-allowed" : ""}
-                `}
-        >
-          Next &gt;
-        </button>
-      </div>
-
-      <div className="grid grid-cols-7 gap-1 w-full border border-primary-200 dark:border-primary-700 rounded-lg p-2">
-        {daysOfWeek.map((day) => (
-          <div
-            key={day}
-            className="text-center font-bold text-foreground dark:text-background py-2"
-          >
-            {day}
-          </div>
-        ))}
-        {calendarDays.map((day, index) => {
-          const moodColors = day.entry?.name
-            ? getMoodColors(day.entry?.name)
-            : null;
-          const isToday =
-            day.date && day.date.toDateString() === today.toDateString();
-
-          return (
-            <div
-              key={index}
-              className={`
-                  relative flex flex-col items-center justify-center p-3 h-28 sm:h-32 md:h-36 lg:h-40 border rounded-lg transition-colors duration-200
-                  ${day.date ? (moodColors ? `${moodColors.bgColor1} border-${moodColors.borderColor1}` : "bg-background dark:bg-primary-700 border-primary-200 dark:border-primary-700") : "bg-primary-100 dark:bg-primary-800 border-primary-200 dark:border-primary-700"}
-                  ${isToday ? "ring-2 ring-accent dark:ring-accent" : ""}
-                  ${day.isFuture ? "opacity-50 cursor-not-allowed" : ""}
-                  ${day.hasEntry && !day.isFuture ? "cursor-pointer hover:shadow-md" : day.date && !day.isFuture ? "cursor-default" : ""}
-                `}
-              onClick={() => handleDateClick(day)}
-            >
-              {day.dayOfMonth && (
-                <span
-                  className={`text-lg font-medium ${moodColors ? moodColors.textColor2 : "text-foreground dark:text-background"} absolute top-2 left-2`}
-                >
-                  {day.dayOfMonth}
-                </span>
-              )}
-              {day.hasEntry && day.entry?.emoji && (
-                <span className="absolute bottom-2 right-2 text-xl">
-                  {day.entry?.emoji}
-                </span>
-              )}
-            </div>
-          );
-        })}
+        <div className="w-full lg:w-1/2">
+          <MoodLinePlotComponent entriesForMonth={entriesForMonth} />
+        </div>
       </div>
     </div>
   );
 };
 
-export default Calendar;
+export default Status;
