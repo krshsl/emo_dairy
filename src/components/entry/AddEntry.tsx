@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { insertOrUpdate } from "../../lib/tree/redBlackTree";
+import { getTree, insertOrUpdate } from "../../lib/tree/redBlackTree";
 import { reactions } from "../../interface/dairyEntry";
+import { find } from "@collectable/red-black-tree";
 
 const AddEntry: React.FC = () => {
   const [selectedEmoji, setSelectedEmoji] = useState<{
@@ -12,6 +13,17 @@ const AddEntry: React.FC = () => {
   const [note, setNote] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    const tree = getTree();
+    const entry = find("eq", date, tree);
+    if (!!entry) {
+      setSelectedEmoji({ emoji: entry.value.emoji, name: entry.value.name });
+      setNote(entry.value.note);
+    }
+  }, []);
 
   const handleSaveEntry = () => {
     if (!selectedEmoji || !note.trim()) {
