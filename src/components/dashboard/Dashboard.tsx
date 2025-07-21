@@ -25,7 +25,7 @@ const Dashboard: React.FC = () => {
   );
   const navigate = useNavigate();
 
-  const generateDummyData = useCallback(() => {
+  const _generateDummyData = useCallback(() => {
     if (treeLen() === 0) {
       const now = new Date();
       const sixMonthsAgo = new Date();
@@ -48,7 +48,7 @@ const Dashboard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    generateDummyData();
+    // _generateDummyData();
     loadMoreEntries();
   });
 
