@@ -1,46 +1,90 @@
-# Getting Started with Create React App
+# Emoji Diary: Your Daily Emotion Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Emoji Diary is a React web application that allows users to track their daily emotions and write diary entries. The application provides a simple and intuitive interface for recording your mood and thoughts each day.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Daily Entries**: Log your mood and write notes for each day
+- **Dashboard View**: View all your past entries in a scrollable list
+- **Calendar View**: See your emotions at a glance in a monthly calendar format
+- **Stats**: (Coming soon!) Analytics about your mood patterns
+- **Dark/Light Mode**: Toggle between dark and light themes based on your preference
+- **Responsive Design**: Works on desktop and mobile devices
 
-### `npm start`
+## Technical Details
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The application is built using modern web technologies:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **React**: Frontend library for building the user interface
+- **TypeScript**: For type-safe code
+- **Tailwind CSS**: For styling and responsive design
+- **React Router**: For navigation between different views
+- **Red-Black Tree**: For efficient storage and retrieval of diary entries
+- **LocalStorage**: For persisting data between sessions
 
-### `npm test`
+## Project Structure
+```
+src/
+├── common/          # Common UI components
+├── components/      # Main components
+│   ├── calendar/    # Calendar view
+│   ├── dashboard/   # Dashboard view
+│   ├── entry/       # Entry creation and viewing
+│   └── stats/       # Statistics view
+├── context/         # React context providers
+├── icons/           # SVG icons as React components
+├── interface/       # TypeScript interfaces
+├── lib/             # Utility libraries
+│   ├── tree/        # Red-black tree implementation
+│   └── utils/       # Helper functions
+└── router/          # Routing configuration
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation and Usage
 
-### `npm run build`
+### Prerequisites
+- Node.js (v14 or higher recommended)
+- npm (v6 or higher recommended)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Getting Started
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Start the development server: `npm start`
+4. Open http://localhost:3000 in your browser
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Building for Production
+To create an optimized production build:
+```bash
+npm run build
+```
+This will create a `build` folder with the production-ready application.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Development
 
-### `npm run eject`
+### Available Scripts
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- **`npm start`**: Runs the development server
+- **`npm test`**: Launches the test runner
+- **`npm run build`**: Creates a production build
+- **`npm run eject`**: Ejects from Create React App configuration
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+1. **Dashboard**: View all your entries chronologically
+2. **Add Entry**: Click the "Add New Entry" button to create a new diary entry
+    - Select an emoji that represents your mood
+    - Write your thoughts in the note field
+    - Save your entry
+3. **Calendar**: Navigate to the Calendar tab to see your entries in a calendar format
+    - Click on any day with an entry to view the full details
+4. **Entry Details**: Click on any entry to view its full content
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Future Enhancements
 
-## Learn More
+- Statistics and mood trends analysis
+- Export/import functionality for diary data (or you can also manually update the local storage to perform this)
+- Custom emoji support
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## License
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project is licensed under the MIT License.
