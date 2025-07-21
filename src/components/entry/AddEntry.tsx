@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getTree, insertOrUpdate } from "../../lib/tree/redBlackTree";
-import { reactions } from "../../interface/dairyEntry";
+import { reactions } from "../../interface/diaryEntry";
 import { find } from "@collectable/red-black-tree";
 
 const AddEntry: React.FC = () => {

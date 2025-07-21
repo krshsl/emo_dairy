@@ -7,8 +7,8 @@ import {
 } from "@collectable/red-black-tree";
 
 import { getTree, insertOrUpdate, treeLen } from "../../lib/tree/redBlackTree";
-import type { TreeKey, TreeValue } from "../../interface/dairyEntry";
-import { reactions } from "../../interface/dairyEntry";
+import type { TreeKey, TreeValue } from "../../interface/diaryEntry";
+import { reactions } from "../../interface/diaryEntry";
 import { formatDateToYYYYMMDD } from "../../lib/utils/dateUtils";
 import { getMoodColors } from "../../lib/utils/moodColor";
 
@@ -118,7 +118,7 @@ const Dashboard: React.FC = () => {
         Daily Entries
       </h1>
       <p className="mt-4 text-center text-lg text-primary-600 dark:text-primary-300">
-        Welcome to your emoji dairy! Scroll down to load more entries.
+        Welcome to your emoji diary! Scroll down to load more entries.
       </p>
 
       <button
@@ -134,23 +134,21 @@ const Dashboard: React.FC = () => {
           return (
             <li
               key={formatDateToYYYYMMDD(date)}
-              className={`mb-2 rounded-lg border ${moodColors.borderColor2} p-4 ${moodColors.bgColor3} flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200 relative`}
+              className={`mb-2 rounded-lg border ${moodColors.borderColor} p-4 ${moodColors.bgColor} flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200 relative`}
               onClick={() => navigate(`/entry/${formatDateToYYYYMMDD(date)}`)}
             >
               <div className="flex justify-between items-center w-full mb-2">
                 <div
-                  className={`flex items-center text-xl lg:text-2xl ${moodColors.textColor2}`}
+                  className={`flex items-center text-xl lg:text-2xl ${moodColors.textColor}`}
                 >
                   <span className="font-semibold">{name}</span>
                 </div>
-                <span
-                  className={`font-mono text-base ${moodColors.textColor3}`}
-                >
+                <span className={`font-mono text-base ${moodColors.textColor}`}>
                   {date.toLocaleDateString()}
                 </span>
               </div>
               <div
-                className={`mt-1 text-base lg:text-lg ${moodColors.textColor2} w-full text-center`}
+                className={`mt-1 text-base lg:text-lg ${moodColors.textColor} w-full text-center`}
               >
                 {note.length > TRUNCATE_LENGTH
                   ? `${note.substring(0, TRUNCATE_LENGTH)}...`

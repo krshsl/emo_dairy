@@ -14,7 +14,7 @@ const MainContent: React.FC = () => {
     <div className="flex flex-1 flex-col overflow-hidden dark:bg-foreground">
       <header className="flex items-center justify-between border-b border-primary-200 bg-background p-4 lg:hidden dark:bg-foreground dark:border-primary-700">
         <span className="text-lg font-semibold text-foreground dark:text-background">
-          <button onClick={() => navigate("/")}>Emo-Dairy</button>
+          <button onClick={() => navigate("/")}>Emo-Diary</button>
         </span>
         <button
           onClick={() => setSidebarOpen(true)}

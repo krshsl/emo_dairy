@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { iterateFrom } from "@collectable/red-black-tree";
 
-import type { TreeKey, TreeValue } from "../../interface/dairyEntry";
+import type { TreeKey, TreeValue } from "../../interface/diaryEntry";
 import { getTree } from "../../lib/tree/redBlackTree";
 import { formatDateToYYYYMMDD } from "../../lib/utils/dateUtils";
 import CalendarComponent from "./Calendar";

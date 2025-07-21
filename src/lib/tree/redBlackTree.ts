@@ -6,7 +6,7 @@ import {
 } from "@collectable/red-black-tree";
 import type { RedBlackTreeStructure } from "@collectable/red-black-tree";
 
-import type { TreeKey, TreeValue } from "../../interface/dairyEntry";
+import type { TreeKey, TreeValue } from "../../interface/diaryEntry";
 
 export type DateTree = RedBlackTreeStructure<TreeKey, TreeValue>;
 

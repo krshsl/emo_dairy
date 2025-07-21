@@ -230,46 +230,6 @@ module.exports = {
         800: "#92401a",
         900: "#793414",
       },
-
-      "rad-bg-1": { DEFAULT: "#E0FFE0", dark: "#001F1A" },
-      "rad-bg-2": { DEFAULT: "#C8FFC8", dark: "#00332B" },
-      "rad-text-1": { DEFAULT: "#00C853", dark: "#66FFB2" },
-      "rad-text-2": { DEFAULT: "#00A044", dark: "#33FF99" },
-      "rad-text-3": { DEFAULT: "#007B3E", dark: "#00CC88" },
-      "rad-accent-1": { DEFAULT: "#00E676", dark: "#00FFB2" },
-      "rad-accent-2": { DEFAULT: "#33FF99", dark: "#33FF99" },
-
-      "good-bg-1": { DEFAULT: "#FFFBE6", dark: "#2E2500" },
-      "good-bg-2": { DEFAULT: "#FFF0B3", dark: "#473A00" },
-      "good-text-1": { DEFAULT: "#FFD700", dark: "#FFE082" },
-      "good-text-2": { DEFAULT: "#FFA000", dark: "#FFC107" },
-      "good-text-3": { DEFAULT: "#E68A00", dark: "#D1A02E" },
-      "good-accent-1": { DEFAULT: "#FFEB3B", dark: "#FFD700" },
-      "good-accent-2": { DEFAULT: "#FFC107", dark: "#FFA500" },
-
-      "meh-bg-1": { DEFAULT: "#F0F0F0", dark: "#2C2C2C" },
-      "meh-bg-2": { DEFAULT: "#E8E8E8", dark: "#383838" },
-      "meh-text-1": { DEFAULT: "#A0A0A0", dark: "#B8B8B8" },
-      "meh-text-2": { DEFAULT: "#787878", dark: "#909090" },
-      "meh-text-3": { DEFAULT: "#505050", dark: "#686868" },
-      "meh-accent-1": { DEFAULT: "#B0B0B0", dark: "#707070" },
-      "meh-accent-2": { DEFAULT: "#888888", dark: "#484848" },
-
-      "sad-bg-1": { DEFAULT: "#EBF5F8", dark: "#0F1A2A" },
-      "sad-bg-2": { DEFAULT: "#D5E8F0", dark: "#1C2A3D" },
-      "sad-text-1": { DEFAULT: "#6A8BAA", dark: "#8FAFC2" },
-      "sad-text-2": { DEFAULT: "#4F6D8A", dark: "#6B8EAA" },
-      "sad-text-3": { DEFAULT: "#34506B", dark: "#4A6D8A" },
-      "sad-accent-1": { DEFAULT: "#5A7A9A", dark: "#3A5A7A" },
-      "sad-accent-2": { DEFAULT: "#3D5A7A", dark: "#2A4A6A" },
-
-      "awful-bg-1": { DEFAULT: "#FFF0F0", dark: "#1A0000" },
-      "awful-bg-2": { DEFAULT: "#FFE0E0", dark: "#2B0000" },
-      "awful-text-1": { DEFAULT: "#CC0000", dark: "#FF6666" },
-      "awful-text-2": { DEFAULT: "#A00000", dark: "#FF3333" },
-      "awful-text-3": { DEFAULT: "#700000", dark: "#CC0000" },
-      "awful-accent-1": { DEFAULT: "#FF0000", dark: "#FF0000" },
-      "awful-accent-2": { DEFAULT: "#B20000", dark: "#FF3300" },
     }),
     columns: {
       auto: "auto",
@@ -1179,5 +1139,17 @@ module.exports = {
       50: "50",
     },
   },
+  safelist: [
+    {
+      pattern:
+        /(bg|border|text)-(emerald|sky|slate|amber|rose|accent|primary|secondary|neutral)-(50|100|200|300|400|500|600|700|800|900)/,
+      variants: ["dark"],
+    },
+    {
+      pattern:
+        /(emerald|sky|slate|amber|rose|accent|primary|secondary|neutral)-(50|100|200|300|400|500|600|700|800|900)/,
+      variants: ["dark"],
+    },
+  ],
   plugins: [],
 };

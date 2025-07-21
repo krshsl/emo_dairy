@@ -1,7 +1,7 @@
 import React from "react";
 
-import type { TreeKey, TreeValue } from "../../interface/dairyEntry";
-import { reactions } from "../../interface/dairyEntry";
+import type { TreeKey, TreeValue } from "../../interface/diaryEntry";
+import { reactions } from "../../interface/diaryEntry";
 import { getMoodColors } from "../../lib/utils/moodColor";
 
 interface MoodBarPlotProps {
@@ -40,11 +40,11 @@ const MoodBarPlotComponent: React.FC<MoodBarPlotProps> = ({
               className="flex flex-col items-center h-full justify-end w-1/5 px-1"
             >
               <div
-                className={`${moodColors.bgColor1} ${moodColors.borderColor2} border w-full rounded-t-md transition-all duration-300 ease-in-out`}
+                className={`${moodColors.bgColor} ${moodColors.borderColor} border w-full rounded-t-md transition-all duration-300 ease-in-out`}
                 style={{ height: `${height}%` }}
               ></div>
               <span
-                className={`text-sm font-medium ${moodColors.textColor2} mt-1`}
+                className={`text-sm font-medium ${moodColors.textColor} mt-1`}
               >
                 {reaction.emoji}
               </span>

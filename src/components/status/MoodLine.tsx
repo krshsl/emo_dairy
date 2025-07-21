@@ -1,16 +1,6 @@
 import React from "react";
-import type { TreeKey, TreeValue } from "../../interface/dairyEntry";
-
-const getMoodColors = (moodName: string) => {
-  const colorMap: { [key: string]: { bgColor1: string } } = {
-    Rad: { bgColor1: "stroke-green-500 fill-green-500" },
-    Good: { bgColor1: "stroke-blue-500 fill-blue-500" },
-    Meh: { bgColor1: "stroke-yellow-500 fill-yellow-500" },
-    Sad: { bgColor1: "stroke-gray-500 fill-gray-500" },
-    Awful: { bgColor1: "stroke-red-500 fill-red-500" },
-  };
-  return colorMap[moodName] || { bgColor1: "stroke-black fill-black" };
-};
+import type { TreeKey, TreeValue } from "../../interface/diaryEntry";
+import { getMoodColors } from "../../lib/utils/moodColor";
 
 interface MoodLinePlotProps {
   entriesForMonth: [TreeKey, TreeValue][];
@@ -102,23 +92,6 @@ const MoodLinePlotComponent: React.FC<MoodLinePlotProps> = ({
             className="h-full w-full"
             preserveAspectRatio="xMidYMid meet"
           >
-            <defs>
-              <style>{`
-                .stroke-green-500 { stroke: #22c55e; }
-                .fill-green-500 { fill: #22c55e; }
-                .stroke-blue-500 { stroke: #3b82f6; }
-                .fill-blue-500 { fill: #3b82f6; }
-                .stroke-yellow-500 { stroke: #eab308; }
-                .fill-yellow-500 { fill: #eab308; }
-                .stroke-gray-500 { stroke: #6b7280; }
-                .fill-gray-500 { fill: #6b7280; }
-                .stroke-red-500 { stroke: #ef4444; }
-                .fill-red-500 { fill: #ef4444; }
-                .stroke-black { stroke: #000; }
-                .fill-black { fill: #000; }
-              `}</style>
-            </defs>
-
             {Object.keys(moodScale)
               .reverse()
               .map((key) => {
@@ -163,7 +136,7 @@ const MoodLinePlotComponent: React.FC<MoodLinePlotProps> = ({
               const y1 = getY(prev.value);
               const x2 = getX(point.day);
               const y2 = getY(point.value);
-              const colorClasses = getMoodColors(prev.name).bgColor1;
+              const colorClass = getMoodColors(prev.name).strokeFill;
 
               return (
                 <line
@@ -172,27 +145,9 @@ const MoodLinePlotComponent: React.FC<MoodLinePlotProps> = ({
                   y1={y1}
                   x2={x2}
                   y2={y2}
-                  className={colorClasses.split(" ")[0]}
+                  className={colorClass}
                   strokeWidth="2"
                 />
-              );
-            })}
-
-            {plottedData.map((point) => {
-              const x = getX(point.day);
-              const y = getY(point.value);
-              const colorClasses = getMoodColors(point.name).bgColor1;
-
-              return (
-                <circle
-                  key={`dot-${point.day}`}
-                  cx={x}
-                  cy={y}
-                  r="4"
-                  className={colorClasses.split(" ")[1]}
-                >
-                  <title>{`${point.name} on Day ${point.day}`}</title>
-                </circle>
               );
             })}
           </svg>

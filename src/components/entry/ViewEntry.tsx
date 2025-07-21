@@ -3,7 +3,7 @@ import { Path, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { find } from "@collectable/red-black-tree";
 
-import type { TreeKey, TreeValue } from "../../interface/dairyEntry";
+import type { TreeKey, TreeValue } from "../../interface/diaryEntry";
 import { getTree } from "../../lib/tree/redBlackTree";
 import { parseYYYYMMDDToDate } from "../../lib/utils/dateUtils";
 import { getMoodColors } from "../../lib/utils/moodColor";
@@ -87,20 +87,20 @@ const EntryDetail: React.FC = () => {
       </p>
 
       <div
-        className={`mt-8 w-full max-w-md p-6 rounded-lg shadow-md border ${moodColors.borderColor1} ${moodColors.bgColor1}`}
+        className={`mt-8 w-full max-w-md p-6 rounded-lg shadow-md border ${moodColors.borderColor} ${moodColors.bgColor}`}
       >
         <div className="flex justify-between items-center w-full mb-4">
           <div
-            className={`flex items-center text-3xl lg:text-4xl ${moodColors.textColor2}`}
+            className={`flex items-center text-3xl lg:text-4xl ${moodColors.textColor}`}
           >
             {emoji} <span className="ml-3 font-bold">{name}</span>
           </div>
-          <span className={`font-mono text-base ${moodColors.textColor3}`}>
+          <span className={`font-mono text-base ${moodColors.textColor}`}>
             {displayDate}
           </span>
         </div>
         <div
-          className={`text-lg lg:text-xl leading-relaxed whitespace-pre-wrap p-3 border ${moodColors.borderColor2} rounded-lg ${moodColors.bgColor2} ${moodColors.textColor2}`}
+          className={`text-lg lg:text-xl leading-relaxed whitespace-pre-wrap p-3 border ${moodColors.borderColor} rounded-lg ${moodColors.bgColor} ${moodColors.textColor}`}
         >
           {note}
         </div>
