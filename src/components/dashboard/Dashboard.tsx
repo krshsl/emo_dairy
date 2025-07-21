@@ -119,7 +119,7 @@ const Dashboard: React.FC = () => {
         Add New Entry
       </button>
 
-      <ul className="mt-8 w-full max-w-3xl">
+      <ul className="mt-8 w-full">
         {entries.map(([date, { emoji, name, note }]) => (
           <li
             key={formatDateToYYYYMMDD(date)}

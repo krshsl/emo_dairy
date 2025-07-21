@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Path, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { find } from "@collectable/red-black-tree";
 
@@ -12,8 +12,13 @@ interface EntryDetailParams extends Record<string, string | undefined> {
 }
 
 const EntryDetail: React.FC = () => {
-  const { dateString } = useParams<EntryDetailParams>();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [backState, setBack] = useState<[String, string | Partial<Path>]>([
+    "Dashboard",
+    "/dashboard",
+  ]);
+  const { dateString } = useParams<EntryDetailParams>();
   const [entry, setEntry] = useState<[TreeKey, TreeValue] | undefined>(
     undefined,
   );
@@ -33,7 +38,11 @@ const EntryDetail: React.FC = () => {
         setDisplayDate("Entry not found");
       }
     }
-  }, [dateString]);
+
+    if (location.state?.from === "/calendar") {
+      setBack(["Calendar", "/calendar"]);
+    }
+  }, [dateString, location]);
 
   if (!entry) {
     return (
@@ -46,10 +55,10 @@ const EntryDetail: React.FC = () => {
           found.
         </p>
         <button
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate(backState[1])}
           className="mt-6 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-500"
         >
-          Back to Dashboard
+          Back to {backState[0]}
         </button>
       </div>
     );
@@ -80,14 +89,13 @@ const EntryDetail: React.FC = () => {
         </div>
         <div className="text-lg lg:text-xl text-gray-800 dark:text-white leading-relaxed whitespace-pre-wrap p-3 border border-gray-300 rounded-lg dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
           {" "}
-          {/* Added background to note */}
           {note}
         </div>
         <button
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate(backState[1])}
           className="mt-6 w-full px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-500"
         >
-          Back to Dashboard
+          Back to {backState[0]}
         </button>
       </div>
     </div>

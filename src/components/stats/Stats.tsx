@@ -7,7 +7,7 @@ const Stats: React.FC = () => {
         Stats.
       </h1>
       <p className="mt-4 text-center text-lg text-gray-600 dark:text-gray-300">
-        Use this page to view your mood stats!
+        This page is still under construction...
       </p>
     </div>
   );

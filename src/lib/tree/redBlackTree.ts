@@ -3,7 +3,6 @@ import {
   set,
   iterateFromFirst,
   size,
-  RedBlackTreeIterator,
 } from "@collectable/red-black-tree";
 import type { RedBlackTreeStructure } from "@collectable/red-black-tree";
 
@@ -31,18 +30,6 @@ export const insertOrUpdate = (date: TreeKey, data: TreeValue): DateTree => {
   globalTree = set(date, data, globalTree);
   saveTree();
   return globalTree;
-};
-
-export const forEachFromIndex = (
-  iter: RedBlackTreeIterator<TreeKey, TreeValue>,
-  callback: (key: TreeKey, value: TreeValue) => void,
-): void => {
-  let entry = iter.next();
-  while (!entry.done) {
-    const { key, value } = entry.value;
-    callback(key, value);
-    entry = iter.next();
-  }
 };
 
 export const forEachInOrder = (
